@@ -231,7 +231,7 @@ def huva2(e1, c1, nappain):  # do that
                     mx = 5
                     if c1[0] and tuna <= 0:
                         comcount += 1
-            if 1410 <= e1[0] <= 1441:
+            if 1410 <= e1[0] <= 1441:  # Vaihtaa komentorivien järjestystä
                 for i in range(4):
                     if 418 + (i * 95) <= e1[1] <= 446 + (i * 95):
                         if i == 0:
@@ -254,7 +254,7 @@ def huva2(e1, c1, nappain):  # do that
                             if c1[0] and tuna <= 0:
                                 switch(oven, 1, comcount + 3)
                             return luva
-            elif 1530 <= e1[0] <= 1561:
+            elif 1530 <= e1[0] <= 1561:  # Vaihtaa komentorivien järjestystä
                 for i in range(4):
                     if 418 + (i * 95) <= e1[1] <= 446 + (i * 95):
                         if i == 0:
@@ -277,7 +277,7 @@ def huva2(e1, c1, nappain):  # do that
                             if c1[0] and tuna <= 0:
                                 switch(oven, 0, comcount + 3)
                             return luva
-            elif 1638 <= e1[0] <= 1669:
+            elif 1638 <= e1[0] <= 1669:  # Poistaa komentorivin
                 for i in range(4):
                     if 418 + (i * 95) <= e1[1] <= 446 + (i * 95):
                         if i == 0:
@@ -305,17 +305,17 @@ def huva2(e1, c1, nappain):  # do that
                                 delete(comcount + 3, oven)
                             return luva
 
-            if (905 <= e1[0] <= 1232) and (367 <= e1[1] <= 482) and c1[0] and tuna <= 0:
+            if (905 <= e1[0] <= 1232) and (367 <= e1[1] <= 482) and c1[0] and tuna <= 0:  # Valitsee kohde lämpötilan
                 Input = True
                 selection = 1
                 tuna = 4
 
-            elif (905 <= e1[0] <= 1232) and (483 <= e1[1] <= 595) and c1[0] and tuna <= 0:
+            elif (905 <= e1[0] <= 1232) and (483 <= e1[1] <= 595) and c1[0] and tuna <= 0:  # Valitsee ajan jossa lämpötilaan tulee päästä
                 Input = True
                 selection = 2
                 tuna = 4
 
-            elif (905 <= e1[0] <= 1232) and (596 <= e1[1] <= 711) and c1[0] and tuna <= 0:
+            elif (905 <= e1[0] <= 1232) and (596 <= e1[1] <= 711) and c1[0] and tuna <= 0:  # Valitse aika kuinka pitkään lämpötilassa pitää olla
                 Input = True
                 selection = 3
                 tuna = 4
@@ -441,7 +441,8 @@ def savenot():  # tyhjentää komentosarjan
     il = [0, 0, 0]
 
 
-def rtf():  # Ram to file
+"""
+ def rtf():  # Ram to file
     global cl1, cl2, cl3, cl4, cl5
     a = []
     b = []
@@ -549,6 +550,40 @@ def rtf():  # Ram to file
     for x in c:
         filed.write(str(x)+",")
     filed.write("\n,")
+"""
+
+
+def rtf2():  # Ram to file 2 made by asking chatGPT to optimaze my code and then adding globals and fixing missing , from file
+    global cl1, cl2, cl3, cl4, cl5
+    filed = open("file.txt", "w")
+    oven_names = ["Oven 1", "Oven 2", "Oven 3", "Oven 4", "Oven 5"]
+    furnaces = [cl1, cl2, cl3, cl4, cl5]
+
+    for oven_name, furnace in zip(oven_names, furnaces):
+        filed.write(oven_name + "\n")
+
+        a, b, c = [], [], []
+        for x in furnace:
+            a.append(x[0])
+            b.append(x[1])
+            c.append(x[2])
+
+        a.reverse()
+        b.reverse()
+        c.reverse()
+
+        if a:
+            filed.write("," + ",".join(str(x) for x in a) + ",\n")
+        else:
+            filed.write("," + "\n")
+        if b:
+            filed.write("," + ",".join(str(x) for x in b) + ",\n")
+        else:
+            filed.write("," + "\n")
+        if c:
+            filed.write("," + ",".join(str(x) for x in c) + ",\n")
+        else:
+            filed.write("," + "\n")
 
 
 def startfile():  # ohjelman käynnistyessä yrittää luoda uuden tiedoston, jos tiedosto on olemassa kutsuu ftr():n
@@ -632,23 +667,23 @@ def delete(n, lista):
     if lista == 0:
         if 0 <= n < len(cl1):
             cl1.pop(n)
-            rtf()
+            rtf2()
     elif lista == 1:
         if 0 <= n < len(cl2):
             cl2.pop(n)
-            rtf()
+            rtf2()
     elif lista == 2:
         if 0 <= n < len(cl3):
             cl3.pop(n)
-            rtf()
+            rtf2()
     elif lista == 3:
         if 0 <= n < len(cl4):
             cl4.pop(n)
-            rtf()
+            rtf2()
     elif lista == 4:
         if 0 <= n < len(cl5):
             cl5.pop(n)
-            rtf()
+            rtf2()
     return
 
 
@@ -719,7 +754,7 @@ def switch(uuni, b, co):
                 cl5.append(a)
             else:
                 cl5.insert(co+1, a)
-    rtf()
+    rtf2()
 
 
 def active(act):
