@@ -785,6 +785,10 @@ def deactive(act):
         ovens[4] = False
 
 
+def upkeep():
+    global ovens, ovenscl
+    pass
+
 B1 = pygame.image.load("pict/Start.png")
 B1s = pygame.image.load("pict/Start s.png")
 B2 = pygame.image.load("pict/Active.png")
@@ -829,12 +833,8 @@ anicount = 0
 mouse = True
 
 il = [0, 0, 0]
-cl1 = []
-cl2 = []
-cl3 = []
-cl4 = []
-cl5 = []
-
+cl1, cl2, cl3, cl4, cl5 = [], [], [], [], []
+ovenscl = [cl1, cl2, cl3, cl4, cl5]
 ovens = [False, False, False, False, False]
 
 startfile()
