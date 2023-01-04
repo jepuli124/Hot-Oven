@@ -1,4 +1,5 @@
 import pygame
+from pymodbus.client import ModbusTcpClient
 
 pygame.init()
 
@@ -786,7 +787,8 @@ def deactive(act):
 
 
 def upkeep():
-    global ovens, ovenscl
+    global ovens, ovenscl, ip
+
     pass
 
 
@@ -832,7 +834,8 @@ comcount = 0
 command = 0
 anicount = 0
 mouse = True
-
+ip1, ip2, ip3, ip4, ip5 = '0.0.0.0', '0.0.0.0', '0.0.0.0', '0.0.0.0', '0.0.0.0'
+ip = [ip1, ip2, ip3, ip4, ip5]
 il = [0, 0, 0]
 cl1, cl2, cl3, cl4, cl5 = [], [], [], [], []
 ovenscl = [cl1, cl2, cl3, cl4, cl5]
