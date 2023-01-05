@@ -1,5 +1,5 @@
 import pygame
-from pymodbus.client import ModbusTcpClient
+#from pymodbus.client import ModbusTcpClient
 
 pygame.init()
 
@@ -381,6 +381,7 @@ def huva3():  # Change oven's IP address
     global oven, ip
 
     return 0
+
 
 def intr():  # aloittaa input vaiheen
     global Input
@@ -806,6 +807,7 @@ def upkeep():  # Tarkastaa ja yllä pitää uunien tilaa
 def changeip(furnace, change):  # Vaihtaa yksittäisen uunin ip:t
     global ip
     ip[furnace] = change
+
 
 # muuttujia:
 B1 = pygame.image.load("pict/Start.png")
