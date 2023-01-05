@@ -18,8 +18,8 @@ Ikkuna.blit(starttext, ((Ix/2)-300, (Iy/2)-75))
 pygame.display.flip()
 
 
-def drawing():
-    global huva, mx, my, il, cl1, cl2, cl3, cl4, cl5, oven, comcount, Input, anicount, selection, FPS, ovens
+def drawing():  # hoitaa piirtämisen kerralla
+    global huva, mx, my, il, ovenscl, oven, comcount, Input, anicount, selection, FPS, ovens
     if anicount >= FPS + 1:
         anicount = 1
     else:
@@ -83,15 +83,15 @@ def drawing():
         Ikkuna.blit(t2, (910, 510))
         Ikkuna.blit(t3, (910, 630))
         if oven == 0:
-            uunilista(cl1)
+            uunilista(ovenscl[0])
         elif oven == 1:
-            uunilista(cl2)
+            uunilista(ovenscl[1])
         elif oven == 2:
-            uunilista(cl3)
+            uunilista(ovenscl[2])
         elif oven == 3:
-            uunilista(cl4)
+            uunilista(ovenscl[3])
         elif oven == 4:
-            uunilista(cl5)
+            uunilista(ovenscl[4])
         if anicount <= FPS / 2:
             if Input:
                 if selection == 1:
@@ -103,11 +103,14 @@ def drawing():
                 if selection == 3:
                     pit = len(str(il[2]))
                     Ikkuna.blit(Bar, (911 + (pit * 43), 620))
+    elif huva == 3:
+        Ikkuna.blit(A1, (0, 0))
+
     else:
         Ikkuna.blit(A1, (0, 0))
 
 
-def uunilista(cl):
+def uunilista(cl):  # manipuloi komentolistojen näkyvyyttä huva 2 näkymässä
     global comcount
     f2 = pygame.font.Font('freesansbold.ttf', 30)
     c = 0
@@ -135,7 +138,7 @@ def uunilista(cl):
         c += 1
 
 
-def napp():  # did this
+def napp():  # Tarkistaa nappien tilan ja välittää eteenpäin
     global run, huva, mouse, tuna
     nappain = pygame.key.get_pressed()
     if not Input and tuna <= 0:
@@ -150,13 +153,16 @@ def napp():  # did this
     elif huva == 2:
         if huva2(e1, c1, nappain) == 1:
             huva = 1
+    elif huva == 3:
+        if huva3 == 1:
+            huva = 1
     if c1[0]:
         tuna = 1
     else:
         tuna -= 1
 
 
-def huva1(e1, c1):  # do that
+def huva1(e1, c1):  # general view manipulator
     global mx, my, oven, tuna, comcount
     luva = 1
     if e1:
@@ -186,7 +192,7 @@ def huva1(e1, c1):  # do that
     return luva
 
 
-def huva2(e1, c1, nappain):  # do that
+def huva2(e1, c1, nappain):  # Singular oven's control
     global Input, mx, oven, selection, tuna, comcount, ovens
     luva = 0
     if not Input:
@@ -370,6 +376,11 @@ def huva2(e1, c1, nappain):  # do that
 
     return luva
 
+
+def huva3():  # Change oven's IP address
+    global oven, ip
+
+    return 0
 
 def intr():  # aloittaa input vaiheen
     global Input
@@ -663,7 +674,7 @@ def ftr():  # suorittaa komentojen siirron tiedostosta (file.txt) ohjelmalle
     return
 
 
-def delete(n, lista):
+def delete(n, lista):  # poistaa comentolistasta komennon
     global cl1, cl2, cl3, cl4, cl5
     if lista == 0:
         if 0 <= n < len(cl1):
@@ -688,7 +699,7 @@ def delete(n, lista):
     return
 
 
-def switch(uuni, b, co):
+def switch(uuni, b, co):  # vaihtaa komentolistassa olevien komentojen paikan
     global cl1, cl2, cl3, cl4, cl5
     if uuni == 0:
         if b:
@@ -758,7 +769,7 @@ def switch(uuni, b, co):
     rtf2()
 
 
-def active(act):
+def active(act):  # muuttaa vaaditun uunin aktiiviseksi
     global ovens
     if act == 0:
         ovens[0] = True
@@ -772,7 +783,7 @@ def active(act):
         ovens[4] = True
 
 
-def deactive(act):
+def deactive(act):  # Muuttaa valitun uunin epäaktiiviseksi
     global ovens
     if act == 0:
         ovens[0] = False
@@ -786,12 +797,17 @@ def deactive(act):
         ovens[4] = False
 
 
-def upkeep():
+def upkeep():  # Tarkastaa ja yllä pitää uunien tilaa
     global ovens, ovenscl, ip
 
     pass
 
 
+def changeip(furnace, change):  # Vaihtaa yksittäisen uunin ip:t
+    global ip
+    ip[furnace] = change
+
+# muuttujia:
 B1 = pygame.image.load("pict/Start.png")
 B1s = pygame.image.load("pict/Start s.png")
 B2 = pygame.image.load("pict/Active.png")
@@ -841,9 +857,9 @@ cl1, cl2, cl3, cl4, cl5 = [], [], [], [], []
 ovenscl = [cl1, cl2, cl3, cl4, cl5]
 ovens = [False, False, False, False, False]
 
-startfile()
+startfile()  # tarkistaa ja tekee tarvittaessa muisti filen
 
-while run:
+while run:  # virallinen cycle
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -852,4 +868,4 @@ while run:
     clock.tick(FPS)
     pygame.display.flip()
 
-pygame.quit()
+pygame.quit()  # end.
