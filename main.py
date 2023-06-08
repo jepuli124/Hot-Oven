@@ -606,6 +606,7 @@ def startfile():  # ohjelman käynnistyessä yrittää luoda uuden tiedoston, jo
         file.write(
             "Oven 1\n,\n,\n,\nOven 2\n,\n,\n,\nOven 3\n,\n,\n,\nOven 4\n,\n,\n,\nOven 5\n,\n,\n,\nEnd of file"
         )
+        file.close()
     except FileExistsError:
         ftr()
 
